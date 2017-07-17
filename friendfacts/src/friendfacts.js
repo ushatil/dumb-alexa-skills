@@ -1,13 +1,33 @@
 /* eslint-disable  func-names */
 /* eslint quote-props: ["error", "consistent"]*/
+/**
+ * This is my first experience with NodeJS. What I've learned is (unsurprisingly) that the language paradigm is
+ * largely based on callbacks.
+ 
+ * You may notice, at some points, triply nested callbacks. We GET the DynamoDB table to find our friend's name,
+ * then if we can't find it we have to GET the list of funny error messages, and then we need to PUT that list of
+ * messages back so as to change their order. It is in the callback of that last PUT where we call Alexa's "emit".
+ *
+ * I'm sure there is a better way. Someone who knows Node will be able to point it out.
+ *
+ * You may also notice that there is a linear search through all the name pronounciations. Clearly, storing the
+ * pronounciations sorted would allow us to do a much quicker search. We're counting on the list of Friends being
+ * relatively small. And indeed, if you're coding this skill or setting it up in your own home, it's a fairly safe
+ * bet that your list of friends is of manageable size.
+ *
+ * Contrary to what you may think, the code itself is not intended to be a joke. The humor is in the content.
+ *
+ * - Uri "U-Man" Shatil
+ **/
 'use strict';
 
+// TODO consistent capitlization scheme here, and use env vars
 const Alexa = require('alexa-sdk');
 const AWS = require('aws-sdk');
 
 const APP_ID = undefined;  // TODO replace with optional env var, default undefined
 const tableName = ''; // TODO replace with env var
-const CANNOT_UNDERSTAND_PRIMARY_NAME = // TODO replace with optinoal env var with default
+const CANNOT_UNDERSTAND_PRIMARY_NAME = ''; // TODO replace with optinoal env var with default
 
 const dynamo = new AWS.DynamoDB();
 
